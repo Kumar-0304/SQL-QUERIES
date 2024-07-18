@@ -1,0 +1,113 @@
+mysql> use college
+Database changed
+
+mysql> create table employe(eid int auto_increment primary key,ename varchar(30),esalary int,department varchar(30));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employe(ename,esalary,department) values('ravi',45000,'cse');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employe(ename,esalary,department) values('suresh',35000,'eee'),('Rambabu',50000,'ece'),('kumar',30000,'civil');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> desc employe;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| eid        | int         | NO   | PRI | NULL    | auto_increment |
+| ename      | varchar(30) | YES  |     | NULL    |                |
+| esalary    | int         | YES  |     | NULL    |                |
+| department | varchar(30) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select *from employe;
++-----+---------+---------+------------+
+| eid | ename   | esalary | department |
++-----+---------+---------+------------+
+|   1 | ravi    |   45000 | cse        |
+|   2 | suresh  |   35000 | eee        |
+|   3 | Rambabu |   50000 | ece        |
+|   4 | kumar   |   30000 | civil      |
++-----+---------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employe rename column department to rerlated_department;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employe;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| eid                 | int         | NO   | PRI | NULL    | auto_increment |
+| ename               | varchar(30) | YES  |     | NULL    |                |
+| esalary             | int         | YES  |     | NULL    |                |
+| rerlated_department | varchar(30) | YES  |     | NULL    |                |
++---------------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employe add experience int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from employe;
++-----+---------+---------+---------------------+------------+
+| eid | ename   | esalary | rerlated_department | experience |
++-----+---------+---------+---------------------+------------+
+|   1 | ravi    |   45000 | cse                 |       NULL |
+|   2 | suresh  |   35000 | eee                 |       NULL |
+|   3 | Rambabu |   50000 | ece                 |       NULL |
+|   4 | kumar   |   30000 | civil               |       NULL |
++-----+---------+---------+---------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employe modify experience varchar(10);
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> update employe set experience='2years';
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+
+mysql> update employe set experience='5years' where ename='rambabu';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> update employe set experience='4years' where ename='ravi';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from employe;
++-----+---------+---------+---------------------+------------+
+| eid | ename   | esalary | rerlated_department | experience |
++-----+---------+---------+---------------------+------------+
+|   1 | ravi    |   45000 | cse                 | 4years     |
+|   2 | suresh  |   35000 | eee                 | 2years     |
+|   3 | Rambabu |   50000 | ece                 | 5years     |
+|   4 | kumar   |   30000 | civil               | 2years     |
++-----+---------+---------+---------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql>mysql> select eid,ename,experience,esalary from employe order by esalary;
++-----+---------+------------+---------+
+| eid | ename   | experience | esalary |
++-----+---------+------------+---------+
+|   4 | kumar   | 2years     |   30000 |
+|   2 | suresh  | 2years     |   35000 |
+|   1 | ravi    | 4years     |   45000 |
+|   3 | Rambabu | 5years     |   50000 |
++-----+---------+------------+---------+
+
+ select max(esalary),rerlated_department from employe group by rerlated_department having max(esalary)>20000;
++--------------+---------------------+
+| max(esalary) | rerlated_department |
++--------------+---------------------+
+|        45000 | cse                 |
+|        35000 | eee                 |
+|        50000 | ece                 |
+|        30000 | civil               |
++--------------+---------------------+
